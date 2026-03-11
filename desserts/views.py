@@ -19,7 +19,6 @@ def dessert_list(request):
     return render(request, "desserts/dessert_list.html", context)
 
 def all_desserts_list(request):
-    """Admin view showing all desserts (available and unavailable) for management"""
     desserts = Dessert.objects.all()
     paginator = Paginator(desserts, 8)
 

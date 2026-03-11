@@ -12,46 +12,103 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error:</strong>
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
 
             <div class="mb-3">
                 <label class="form-label">Dessert Name:</label>
                 {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.name.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
 
             <div class="mb-3">
                 <label class="form-label">Dessert Description:</label>
                 {{ form.description }}
+                {% if form.description.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.description.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
 
             <div class="mb-3">
                 <label class="form-label">Dessert Price (€):</label>
                 {{ form.price }}
+                {% if form.price.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.price.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
 
             <div class="mb-3">
                 <label class="form-label">Dessert Image:</label>
                 {{ form.image }}
+                {% if form.image.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.image.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
 
             <div class="mb-3 form-check">
                 {{ form.is_available }}
                 <label class="form-check-label">Available</label>
+                {% if form.is_available.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.is_available.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
 
             <div class="mb-3">
                 <label class="form-label">Dessert Category:</label>
                 {{ form.category }}
+                {% if form.category.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.category.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
-
 
             <div class="mb-3">
                 <label class="form-label">Ingredients Used:</label>
                 {{ form.ingredients }}
+                {% if form.ingredients.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.ingredients.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="text-center mt-4">

@@ -32,6 +32,12 @@ class DessertForm(forms.ModelForm):
                 "rows": 4,
                 "placeholder": "Please enter Dessert Description",
             }),
+            "name": forms.TextInput(attrs={
+                "placeholder": "Please enter Dessert Name",
+            }),
+            "price": forms.TextInput(attrs={
+                "placeholder": "Please enter the price of the dessert in euro",
+            }),
             "ingredients": forms.CheckboxSelectMultiple(),
         }
 
@@ -39,6 +45,7 @@ class DessertForm(forms.ModelForm):
             "name": {
                 "required": "Please enter a dessert name.",
                 "max_length": "Dessert name cannot exceed 100 characters.",
+                "unique": "A dessert with this name already exists.",
             },
             "price": {
                 "required": "Please enter a dessert price.",

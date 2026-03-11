@@ -4,7 +4,6 @@ from desserts.models import Dessert
 
 
 class OrderCreateForm(forms.ModelForm):
-    """Form for creating new orders - status is automatically set to PENDING"""
     class Meta:
         model = Order
         fields = ["customer_name", "customer_phone", "customer_email", "notes"]
@@ -30,7 +29,6 @@ class OrderCreateForm(forms.ModelForm):
 
 
 class OrderForm(forms.ModelForm):
-    """Form for updating existing orders - includes status field"""
     class Meta:
         model = Order
         fields = ["customer_name", "customer_phone", "customer_email", "status", "notes"]
@@ -79,6 +77,5 @@ class OrderItemForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Only show available desserts
         self.fields['dessert'].queryset = Dessert.objects.filter(is_available=True)
         self.fields['dessert'].help_text = "Select an available dessert."

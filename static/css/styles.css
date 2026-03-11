@@ -240,6 +240,33 @@ main.container {
     background-color: #f3e8dc;
 }
 
+
+.dessert-form-box .helptext,
+.category-form-box .helptext,
+.delete-box .helptext {
+    color: #444a45 !important;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.dessert-form-box small,
+.category-form-box small {
+    color: #444a45 !important;
+}
+
+/* Error message styling */
+.text-danger {
+    color: #d32f2f !important;
+    font-weight: 500;
+}
+
+.alert-danger {
+    background-color: #ffebee;
+    border-color: #ef5350;
+    color: #c62828;
+}
+
 .dessert-form-box .checkbox {
     margin-bottom: 6px;
 }
