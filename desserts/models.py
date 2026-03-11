@@ -52,10 +52,12 @@ class Ingredient(models.Model):
 class Dessert(models.Model):
     name = models.CharField(
         max_length=100,
+        unique=True,
         verbose_name="Dessert Name",
         help_text="Enter the name of the dessert.",
         error_messages={
-            "max_length": "Dessert name cannot exceed 100 characters."
+            "max_length": "Dessert name cannot exceed 100 characters.",
+            "unique": "A dessert with this name already exists."
         }
     )
     description = models.TextField(

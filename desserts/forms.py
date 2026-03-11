@@ -17,6 +17,16 @@ class DessertForm(forms.ModelForm):
             "ingredients": "Ingredients Used",
         }
 
+        help_texts = {
+            "name": "Enter the name of the dessert.",
+            "description": "Describe the dessert in detail.",
+            "price": "Enter the price in EUR.",
+            "image": "Upload an image of the dessert (optional).",
+            "category": "Select the category for this dessert.",
+            "ingredients": "Select the ingredients used in this dessert.",
+            "is_available": "Uncheck if this dessert is currently unavailable.",
+        }
+
         widgets = {
             "description": forms.Textarea(attrs={
                 "rows": 4,

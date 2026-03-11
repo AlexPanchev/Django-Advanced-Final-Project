@@ -18,6 +18,17 @@ def dessert_list(request):
     context = {"page_obj": page_obj}
     return render(request, "desserts/dessert_list.html", context)
 
+def all_desserts_list(request):
+    """Admin view showing all desserts (available and unavailable) for management"""
+    desserts = Dessert.objects.all()
+    paginator = Paginator(desserts, 8)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    context = {"page_obj": page_obj, "show_availability": True}
+    return render(request, "desserts/all_desserts_list.html", context)
+
 def dessert_detail(request, pk):
     dessert = get_object_or_404(Dessert, pk=pk)
     context = {"dessert": dessert}

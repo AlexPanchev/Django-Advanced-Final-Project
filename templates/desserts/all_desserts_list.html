@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+{% load dessert_filters %}
+
+{% block content %}
+<div class="container py-5" >
+
+    <!-- Page Title + Add Button -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="quick-access-title m-0">All Desserts (Admin)</h1>
+         <a href="{% url 'dessert_create' %}" class="btn btn-green btn-lg">Add Dessert</a>
+    </div>
+
+    <p class="text-muted mb-4">This view shows all desserts including unavailable ones for management purposes.</p>
+
+    <div class="row g-4">
+        {% for dessert in page_obj %}
+        <div class="col-md-4 col-lg-3">
+            <div class="card dessert-card h-100 {% if not dessert.is_available %}border-warning{% endif %}">
+
+                {% if dessert.image %}
+                    <img src="{{ dessert.image.url }}" class="dessert-card-img" alt="{{ dessert.name }}" {% if not dessert.is_available %}style="opacity: 0.6;"{% endif %}>
+                {% else %}
+                    <img src="{% static 'img/no-image.jpg' %}" class="dessert-card-img" alt="No image" {% if not dessert.is_available %}style="opacity: 0.6;"{% endif %}>
+                {% endif %}
+
+                {% if not dessert.is_available %}
+                <div class="position-absolute top-0 start-0 bg-warning p-2 rounded">
+                    <span class="badge bg-warning text-dark">Unavailable</span>
+                </div>
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title" style="font-family: 'Playfair Display', serif;">
+                        {{ dessert.name }}
+                    </h5>
+
+                    <p class="card-text text-muted mb-2">
+                        {{ dessert.price|euro }}
+                    </p>
+
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'dessert_detail' dessert.pk %}" class="btn btn-green btn-sm">
+                            View
+                        </a>
+                        <a href="{% url 'dessert_edit' dessert.pk %}" class="btn btn-green btn-sm">
+                            Edit
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        {% empty %}
+        <p>No desserts found.</p>
+        {% endfor %}
+    </div>
+<nav aria-label="Dessert pagination" class="mt-5">
+    <ul class="pagination justify-content-center">
+
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+
+    </ul>
+</nav>
+
+</div>
+{% endblock %}
+

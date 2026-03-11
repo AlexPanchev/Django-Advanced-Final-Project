@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from orders.forms import OrderForm, OrderItemForm
+from orders.forms import OrderForm, OrderCreateForm, OrderItemForm
 from orders.models import Order, OrderItem
 
 
@@ -13,12 +13,12 @@ def order_list(request):
 
 def order_create(request):
     if request.method == "POST":
-        form = OrderForm(request.POST)
+        form = OrderCreateForm(request.POST)
         if form.is_valid():
             order = form.save()
             return redirect("order_detail", pk=order.pk)
     else:
-        form = OrderForm()
+        form = OrderCreateForm()
     context = {"form": form}
     return render(request, "orders/order_form.html", context)
 

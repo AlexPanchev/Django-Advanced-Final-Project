@@ -1,7 +1,13 @@
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, RegexValidator
 from django.db import models
 
 from desserts.models import Dessert
+
+# Phone number validator
+phone_regex = RegexValidator(
+    regex=r'^\+?1?\d{9,15}$',
+    message='Phone number must be entered in the format: +999999999. Up to 15 digits allowed.'
+)
 
 
 class Order(models.Model):
@@ -16,8 +22,9 @@ class Order(models.Model):
         verbose_name='Customer Name',
         )
     customer_phone = models.CharField(
-        max_length=100,
-        help_text='Enter a valid phone number',
+        max_length=17,
+        validators=[phone_regex],
+        help_text='Enter a valid phone number (e.g., +359 123 456 789).',
     )
     customer_email = models.EmailField(
         verbose_name='Customer Email'
