@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Ingredient Form{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="padding-top: 7rem;">
+
+    <h1 class="text-center mb-4">Ingredient Form</h1>
+
+    <div class="dessert-form-box p-4 rounded shadow mx-auto">
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error:</strong>
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label class="form-label">Ingredient Name:</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.name.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3 form-check">
+                {{ form.is_allergen }}
+                <label class="form-check-label">Contains Allergen</label>
+                {% if form.is_allergen.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.is_allergen.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-green btn-lg px-5">Save</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}

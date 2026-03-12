@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Ingredient{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="padding-top: 7rem;">
+
+    <h1 class="text-center mb-4">Delete Ingredient</h1>
+
+    <div class="delete-box p-4 rounded shadow mx-auto">
+
+        <p>Are you sure you want to delete the ingredient <strong>"{{ ingredient.name }}"</strong>?</p>
+
+        {% if ingredient.desserts.exists %}
+        <div class="alert alert-warning">
+            <strong>Warning:</strong> This ingredient is used in {{ ingredient.desserts.count }} dessert{{ ingredient.desserts.count|pluralize }}.
+            Deleting it will remove it from all associated desserts.
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-danger btn-lg px-5">Yes, Delete</button>
+                <a href="{% url 'ingredient_detail' ingredient.pk %}" class="btn btn-secondary btn-lg px-5 ms-3">Cancel</a>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+{% endblock %}

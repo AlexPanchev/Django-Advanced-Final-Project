@@ -5,14 +5,126 @@
 {% block content %}
 <div class="container py-5" style="max-width: 700px;">
 
-    <h1 class="quick-access-title mb-4">Order Form</h1>
+    <h1 class="quick-access-title mb-4">Create Order</h1>
 
     <div class="category-form-box p-4 rounded shadow">
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
 
-            <button type="submit" class="btn btn-green btn-lg mt-3">Save Order</button>
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error:</strong>
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label class="form-label">Customer Name:</label>
+                {{ form.customer_name }}
+                {% if form.customer_name.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.customer_name.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Phone Number:</label>
+                {{ form.customer_phone }}
+                {% if form.customer_phone.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.customer_phone.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email Address:</label>
+                {{ form.customer_email }}
+                {% if form.customer_email.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.customer_email.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Notes:</label>
+                {{ form.notes }}
+                {% if form.notes.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.notes.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <h3 class="mt-4 mb-3">Order Items</h3>
+
+            {{ formset.management_form }}
+
+            {% for form in formset %}
+                <div class="border rounded p-3 mb-3">
+                    <h5>Item {{ forloop.counter }}</h5>
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {% for error in form.non_field_errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label class="form-label">Dessert:</label>
+                        {{ form.dessert }}
+                        {% if form.dessert.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.dessert.errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Quantity:</label>
+                        {{ form.quantity }}
+                        {% if form.quantity.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.quantity.errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Unit Price (€):</label>
+                        {{ form.unit_price }}
+                        {% if form.unit_price.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.unit_price.errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-green btn-lg mt-3">Create Order</button>
         </form>
     </div>
 

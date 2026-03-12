@@ -1,6 +1,6 @@
 from django import forms
 
-from desserts.models import Dessert, Category
+from desserts.models import Dessert, Category, Ingredient
 
 
 class DessertForm(forms.ModelForm):
@@ -21,7 +21,7 @@ class DessertForm(forms.ModelForm):
             "name": "Enter the name of the dessert.",
             "description": "Describe the dessert in detail.",
             "price": "Enter the price in EUR.",
-            "image": "Upload an image of the dessert (optional).",
+            "image": "Upload an image of the dessert.",
             "category": "Select the category for this dessert.",
             "ingredients": "Select the ingredients used in this dessert.",
             "is_available": "Uncheck if this dessert is currently unavailable.",
@@ -73,5 +73,28 @@ class CategoryForm(forms.ModelForm):
     error_messages = {
         "name": {
             "required": "Please enter a category name.",
+        }
+    }
+
+class IngredientForm(forms.ModelForm):
+    class Meta:
+        model = Ingredient
+        fields = '__all__'
+
+    labels = {
+        "name": "Ingredient Name",
+        "is_allergen": "Contains Allergen",
+    }
+
+    widgets = {
+        "name": forms.TextInput(attrs={
+            "placeholder": "Enter ingredient name",
+        }),
+        "is_allergen": forms.CheckboxInput(),
+    }
+
+    error_messages = {
+        "name": {
+            "required": "Please enter an ingredient name.",
         }
     }

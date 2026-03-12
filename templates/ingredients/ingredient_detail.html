@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}{{ ingredient.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="quick-access-title m-0">{{ ingredient.name }}</h1>
+
+        <div class="d-flex gap-3">
+            <a href="{% url 'ingredient_update' ingredient.pk %}" class="btn btn-green btn-lg">Edit</a>
+            <a href="{% url 'ingredient_delete' ingredient.pk %}" class="btn btn-green btn-lg">Delete</a>
+        </div>
+    </div>
+
+    <!-- Ingredient Info -->
+    <div class="category-description-box p-4 rounded shadow mb-5">
+        <h3 class="mb-3">Ingredient Details</h3>
+        <p><strong>Name:</strong> {{ ingredient.name }}</p>
+        <p><strong>Allergen:</strong>
+            {% if ingredient.is_allergen %}
+                <span class="badge bg-danger">Yes - Contains Allergen</span>
+            {% else %}
+                <span class="badge bg-success">No - Safe</span>
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Desserts using this ingredient -->
+    <h2 class="quick-access-title mb-4">Used in Desserts</h2>
+
+    <div class="category-description-box p-4 rounded shadow mb-4">
+        {% for dessert in ingredient.desserts.all %}
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <strong>{{ dessert.name }}</strong>
+                    {% if not dessert.is_available %}
+                        <span class="badge bg-warning text-dark ms-2">Unavailable</span>
+                    {% endif %}
+                </div>
+                <a href="{% url 'dessert_detail' dessert.pk %}" class="btn btn-green btn-sm">View Dessert</a>
+            </div>
+        {% empty %}
+            <p class="text-muted">This ingredient is not used in any desserts yet.</p>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

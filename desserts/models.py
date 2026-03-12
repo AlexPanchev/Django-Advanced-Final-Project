@@ -77,7 +77,11 @@ class Dessert(models.Model):
     image = models.ImageField(
         upload_to="desserts/",
         verbose_name="Image",
-        help_text="Upload an image of the dessert."
+        help_text="Upload an image of the dessert.",
+        error_messages={
+            "required": "An image is required for this dessert.",
+            "invalid": "Please upload a valid image file."
+        }
     )
     is_available = models.BooleanField(
         default=True,

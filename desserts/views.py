@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import DessertForm, CategoryForm
-from .models import Dessert, Category
+from .forms import DessertForm, CategoryForm, IngredientForm
+from .models import Dessert, Category, Ingredient
 from django.core.paginator import Paginator
 
 
@@ -38,7 +38,7 @@ def dessert_create(request):
         form = DessertForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect("dessert_list")
+            return redirect("all_desserts_list")
     else:
         form = DessertForm()
 
@@ -116,7 +116,51 @@ def category_delete(request, pk):
         category.delete()
         return redirect("category_list")
 
-
     context = {"category": category}
-
     return render(request, "categories/category_delete.html", context)
+
+def ingredient_list(request):
+    ingredients = Ingredient.objects.all()
+    context = {"ingredients": ingredients}
+    return render(request, "ingredients/ingredient_list.html", context)
+
+def ingredient_detail(request, pk):
+    ingredient = get_object_or_404(Ingredient, pk=pk)
+    context = {"ingredient": ingredient}
+    return render(request, "ingredients/ingredient_detail.html", context)
+
+def ingredient_create(request):
+    if request.method == "POST":
+        form = IngredientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("ingredient_list")
+    else:
+        form = IngredientForm()
+
+    context = {"form": form}
+    return render(request, "ingredients/ingredient_form.html", context)
+
+def ingredient_update(request, pk):
+    ingredient = get_object_or_404(Ingredient, pk=pk)
+
+    if request.method == "POST":
+        form = IngredientForm(request.POST, instance=ingredient)
+        if form.is_valid():
+            form.save()
+            return redirect("ingredient_detail", pk=ingredient.pk)
+    else:
+        form = IngredientForm(instance=ingredient)
+
+    context = {"form": form, "ingredient": ingredient}
+    return render(request, "ingredients/ingredient_form.html", context)
+
+def ingredient_delete(request, pk):
+    ingredient = get_object_or_404(Ingredient, pk=pk)
+
+    if request.method == "POST":
+        ingredient.delete()
+        return redirect("ingredient_list")
+
+    context = {"ingredient": ingredient}
+    return render(request, "ingredients/ingredient_delete.html", context)
