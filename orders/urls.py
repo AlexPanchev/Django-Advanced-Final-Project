@@ -1,13 +1,18 @@
-from . import views
 from django.urls import path
+from .views import (
+    OrderListView, OrderCreateView, OrderDetailView,
+    OrderUpdateView, OrderDeleteView,
+    OrderItemCreateView, OrderItemUpdateView, OrderItemDeleteView
+)
 
 urlpatterns = [
-    path("", views.order_list, name="order_list"),
-    path("create/", views.order_create, name="order_create"),
-    path("<int:pk>/", views.order_detail, name="order_detail"),
-    path("<int:order_pk>/add-item/", views.orderitem_create, name="orderitem_create"),
-    path("<int:pk>/delete/", views.order_delete, name="order_delete"),
-    path("item/<int:pk>/delete/", views.orderitem_delete, name="orderitem_delete"),
-    path("<int:pk>/edit/", views.order_update, name="order_update"),
-    path("item/<int:pk>/edit/", views.orderitem_update, name="orderitem_update"),
+    path("", OrderListView.as_view(), name="order_list"),
+    path("create/", OrderCreateView.as_view(), name="order_create"),
+    path("<int:pk>/", OrderDetailView.as_view(), name="order_detail"),
+    path("<int:pk>/edit/", OrderUpdateView.as_view(), name="order_update"),
+    path("<int:pk>/delete/", OrderDeleteView.as_view(), name="order_delete"),
+
+    path("<int:order_pk>/add-item/", OrderItemCreateView.as_view(), name="orderitem_create"),
+    path("item/<int:pk>/edit/", OrderItemUpdateView.as_view(), name="orderitem_update"),
+    path("item/<int:pk>/delete/", OrderItemDeleteView.as_view(), name="orderitem_delete"),
 ]

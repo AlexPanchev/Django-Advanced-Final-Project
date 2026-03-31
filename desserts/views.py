@@ -1,166 +1,112 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.views.generic import (
+    ListView, DetailView, CreateView, UpdateView, DeleteView
+)
 
-from .forms import DessertForm, CategoryForm, IngredientForm
 from .models import Dessert, Category, Ingredient
-from django.core.paginator import Paginator
-
+from .forms import DessertForm, CategoryForm, IngredientForm
 
 
 # Create your views here.
 
-def dessert_list(request):
-    desserts = Dessert.objects.filter(is_available=True)
-    paginator = Paginator(desserts, 8)
+class DessertListView(ListView):
+    model = Dessert
+    template_name = "desserts/dessert_list.html"
+    context_object_name = "page_obj"
+    paginate_by = 8
 
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
+    def get_queryset(self):
+        return Dessert.objects.filter(is_available=True)
 
-    context = {"page_obj": page_obj}
-    return render(request, "desserts/dessert_list.html", context)
+class AllDessertsListView(ListView):
+    model = Dessert
+    template_name = "desserts/all_desserts_list.html"
+    context_object_name = "page_obj"
+    paginate_by = 8
 
-def all_desserts_list(request):
-    desserts = Dessert.objects.all()
-    paginator = Paginator(desserts, 8)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["show_availability"] = True
+        return context
 
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
+class DessertDetailView(DetailView):
+    model = Dessert
+    template_name = "desserts/dessert_detail.html"
+    context_object_name = "dessert"
 
-    context = {"page_obj": page_obj, "show_availability": True}
-    return render(request, "desserts/all_desserts_list.html", context)
+class DessertCreateView(CreateView):
+    model = Dessert
+    form_class = DessertForm
+    template_name = "desserts/dessert_form.html"
+    success_url = reverse_lazy("all_desserts_list")
 
-def dessert_detail(request, pk):
-    dessert = get_object_or_404(Dessert, pk=pk)
-    context = {"dessert": dessert}
-    return render(request, "desserts/dessert_detail.html", context)
+class DessertUpdateView(UpdateView):
+    model = Dessert
+    form_class = DessertForm
+    template_name = "desserts/dessert_form.html"
 
-def dessert_create(request):
-    if request.method == "POST":
-        form = DessertForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect("all_desserts_list")
-    else:
-        form = DessertForm()
+    def get_success_url(self):
+        return reverse_lazy("dessert_detail", kwargs={"pk": self.object.pk})
 
-    context = {"form": form}
-    return render(request, "desserts/dessert_form.html", context)
+class DessertDeleteView(DeleteView):
+    model = Dessert
+    template_name = "desserts/dessert_delete.html"
+    success_url = reverse_lazy("dessert_list")
 
-def dessert_edit(request, pk):
-    dessert = get_object_or_404(Dessert, pk=pk)
+class CategoryListView(ListView):
+    model = Category
+    template_name = "categories/category_list.html"
+    context_object_name = "categories"
 
-    if request.method == "POST":
-        form = DessertForm(request.POST, request.FILES, instance=dessert)
-        if form.is_valid():
-            form.save()
-            return redirect("dessert_detail", pk=dessert.pk)
-    else:
-        form = DessertForm(instance=dessert)
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = "categories/category_detail.html"
+    context_object_name = "category"
 
-    context = {"form": form, "dessert": dessert}
-    return render(request, "desserts/dessert_form.html", context)
+class CategoryCreateView(CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = "categories/category_form.html"
+    success_url = reverse_lazy("category_list")
 
-def dessert_delete(request, pk):
-    dessert = get_object_or_404(Dessert, pk=pk)
+class CategoryUpdateView(UpdateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = "categories/category_form.html"
 
-    if request.method == "POST":
-        dessert.delete()
-        return redirect("dessert_list")
+    def get_success_url(self):
+        return reverse_lazy("category_detail", kwargs={"pk": self.object.pk})
 
-    context = {"dessert": dessert}
-    return render(request, "desserts/dessert_delete.html", context)
+class CategoryDeleteView(DeleteView):
+    model = Category
+    template_name = "categories/category_delete.html"
+    success_url = reverse_lazy("category_list")
 
-def category_list(request):
-    categories = Category.objects.all()
-    context = {"categories": categories}
-    return render(request, "categories/category_list.html", context)
+class IngredientListView(ListView):
+    model = Ingredient
+    template_name = "ingredients/ingredient_list.html"
+    context_object_name = "ingredients"
 
-def category_detail(request, pk):
-    category = get_object_or_404(Category, pk=pk)
-    context = {"category": category}
-    return render(request, "categories/category_detail.html", context)
+class IngredientDetailView(DetailView):
+    model = Ingredient
+    template_name = "ingredients/ingredient_detail.html"
+    context_object_name = "ingredient"
 
-def category_create(request):
-    if request.method == "POST":
-        form = CategoryForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("category_list")
-    else:
-        form = CategoryForm()
+class IngredientCreateView(CreateView):
+    model = Ingredient
+    form_class = IngredientForm
+    template_name = "ingredients/ingredient_form.html"
+    success_url = reverse_lazy("ingredient_list")
 
-    context = {"form": form}
-    return render(request, "categories/category_form.html", context)
+class IngredientUpdateView(UpdateView):
+    model = Ingredient
+    form_class = IngredientForm
+    template_name = "ingredients/ingredient_form.html"
 
-def category_update(request, pk):
-    category = get_object_or_404(Category, pk=pk)
+    def get_success_url(self):
+        return reverse_lazy("ingredient_detail", kwargs={"pk": self.object.pk})
 
-    if request.method == "POST":
-        form = CategoryForm(request.POST, instance=category)
-        if form.is_valid():
-            form.save()
-            return redirect("category_detail", pk=category.pk)
-    else:
-        form = CategoryForm(instance=category)
-
-    context = {
-        "form": form,
-        "category": category
-    }
-
-    return render(request, "categories/category_form.html", context)
-
-def category_delete(request, pk):
-    category = get_object_or_404(Category, pk=pk)
-
-    if request.method == "POST":
-        category.delete()
-        return redirect("category_list")
-
-    context = {"category": category}
-    return render(request, "categories/category_delete.html", context)
-
-def ingredient_list(request):
-    ingredients = Ingredient.objects.all()
-    context = {"ingredients": ingredients}
-    return render(request, "ingredients/ingredient_list.html", context)
-
-def ingredient_detail(request, pk):
-    ingredient = get_object_or_404(Ingredient, pk=pk)
-    context = {"ingredient": ingredient}
-    return render(request, "ingredients/ingredient_detail.html", context)
-
-def ingredient_create(request):
-    if request.method == "POST":
-        form = IngredientForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("ingredient_list")
-    else:
-        form = IngredientForm()
-
-    context = {"form": form}
-    return render(request, "ingredients/ingredient_form.html", context)
-
-def ingredient_update(request, pk):
-    ingredient = get_object_or_404(Ingredient, pk=pk)
-
-    if request.method == "POST":
-        form = IngredientForm(request.POST, instance=ingredient)
-        if form.is_valid():
-            form.save()
-            return redirect("ingredient_detail", pk=ingredient.pk)
-    else:
-        form = IngredientForm(instance=ingredient)
-
-    context = {"form": form, "ingredient": ingredient}
-    return render(request, "ingredients/ingredient_form.html", context)
-
-def ingredient_delete(request, pk):
-    ingredient = get_object_or_404(Ingredient, pk=pk)
-
-    if request.method == "POST":
-        ingredient.delete()
-        return redirect("ingredient_list")
-
-    context = {"ingredient": ingredient}
-    return render(request, "ingredients/ingredient_delete.html", context)
+class IngredientDeleteView(DeleteView):
+    model = Ingredient
+    template_name = "ingredients/ingredient_delete.html"
+    success_url = reverse_lazy("ingredient_list")
