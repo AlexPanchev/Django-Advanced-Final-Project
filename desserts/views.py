@@ -12,21 +12,25 @@ from .forms import DessertForm, CategoryForm, IngredientForm
 class DessertListView(ListView):
     model = Dessert
     template_name = "desserts/dessert_list.html"
-    context_object_name = "page_obj"
     paginate_by = 8
 
     def get_queryset(self):
         return Dessert.objects.filter(is_available=True)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["page_obj"] = context["page_obj"]
+        return context
+
 class AllDessertsListView(ListView):
     model = Dessert
     template_name = "desserts/all_desserts_list.html"
-    context_object_name = "page_obj"
     paginate_by = 8
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["show_availability"] = True
+        context["page_obj"] = context["page_obj"]
         return context
 
 class DessertDetailView(DetailView):

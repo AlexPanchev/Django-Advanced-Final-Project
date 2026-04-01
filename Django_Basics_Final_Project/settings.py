@@ -33,7 +33,8 @@ ALLOWED_HOSTS = ['*']
 PROJECT_APPS =[
     'desserts',
     'core',
-    'orders'
+    'orders',
+    'accounts.apps.AccountsConfig'
 ]
 
 INSTALLED_APPS = [
