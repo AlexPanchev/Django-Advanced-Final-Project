@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">My Profile</h1>
+
+    <div class="card p-4">
+        <h3>{{ profile.user.username }}</h3>
+
+        {% if profile.avatar %}
+            <img src="{{ profile.avatar.url }}" alt="Avatar" class="img-thumbnail mb-3" style="max-width: 200px;">
+        {% endif %}
+
+        <p><strong>Email:</strong> {{ profile.user.email }}</p>
+        <p><strong>Phone:</strong> {{ profile.phone|default:"Not provided" }}</p>
+        <p><strong>Address:</strong> {{ profile.address|default:"Not provided" }}</p>
+        <p><strong>Birthdate:</strong> {{ profile.birthdate|default:"Not provided" }}</p>
+
+        {% if profile.preferred_allergens.all %}
+            <p><strong>Preferred Allergens:</strong>
+                {% for allergen in profile.preferred_allergens.all %}
+                    {{ allergen.name }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    None
+                {% endfor %}
+            </p>
+        {% endif %}
+
+        <a href="{% url 'profile_edit' %}" class="btn btn-green btn-lg mt-3">Edit Profile</a>
+    </div>
+</div>
+{% endblock %}

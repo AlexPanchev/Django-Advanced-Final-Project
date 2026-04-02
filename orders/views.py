@@ -1,27 +1,26 @@
-from django.shortcuts import render, redirect, get_object_or_404
-
-from orders.forms import OrderForm, OrderCreateForm, OrderItemForm, OrderItemFormSet
-from orders.models import Order, OrderItem
-
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView, DetailView, CreateView, UpdateView, DeleteView
 )
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
 
 from .models import Order, OrderItem
 from .forms import OrderForm, OrderCreateForm, OrderItemForm, OrderItemFormSet
 
 
-class OrderListView(ListView):
+class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Order
     template_name = "orders/order_list.html"
     context_object_name = "orders"
+    permission_required = "orders.view_order"
 
-class OrderCreateView(CreateView):
+
+class OrderCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Order
     form_class = OrderCreateForm
     template_name = "orders/order_form.html"
+    permission_required = "orders.add_order"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -44,28 +43,35 @@ class OrderCreateView(CreateView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class OrderDetailView(DetailView):
+class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = Order
     template_name = "orders/order_detail.html"
     context_object_name = "order"
+    permission_required = "orders.view_order"
 
-class OrderUpdateView(UpdateView):
+
+class OrderUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Order
     form_class = OrderForm
     template_name = "orders/order_form.html"
+    permission_required = "orders.change_order"
 
     def get_success_url(self):
         return reverse_lazy("order_detail", kwargs={"pk": self.object.pk})
 
-class OrderDeleteView(DeleteView):
+
+class OrderDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Order
     template_name = "orders/order_delete.html"
     success_url = reverse_lazy("order_list")
+    permission_required = "orders.delete_order"
 
-class OrderItemCreateView(CreateView):
+
+class OrderItemCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = OrderItem
     form_class = OrderItemForm
     template_name = "orders/orderitem_form.html"
+    permission_required = "orders.add_orderitem"
 
     def form_valid(self, form):
         order = Order.objects.get(pk=self.kwargs["order_pk"])
@@ -79,10 +85,12 @@ class OrderItemCreateView(CreateView):
         context["order"] = Order.objects.get(pk=self.kwargs["order_pk"])
         return context
 
-class OrderItemUpdateView(UpdateView):
+
+class OrderItemUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = OrderItem
     form_class = OrderItemForm
     template_name = "orders/orderitem_form.html"
+    permission_required = "orders.change_orderitem"
 
     def get_success_url(self):
         return reverse_lazy("order_detail", kwargs={"pk": self.object.order.pk})
@@ -92,9 +100,11 @@ class OrderItemUpdateView(UpdateView):
         context["order"] = self.object.order
         return context
 
-class OrderItemDeleteView(DeleteView):
+
+class OrderItemDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = OrderItem
     template_name = "orders/orderitem_delete.html"
+    permission_required = "orders.delete_orderitem"
 
     def get_success_url(self):
         return reverse_lazy("order_detail", kwargs={"pk": self.object.order.pk})
