@@ -36,6 +36,8 @@ PROJECT_APPS =[
     'orders',
     'accounts.apps.AccountsConfig',
     "reviews",
+    'rest_framework',
+    'api',
 
 ]
 
