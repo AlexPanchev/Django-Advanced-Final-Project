@@ -34,6 +34,14 @@ class DessertDetailView(DetailView):
     template_name = "desserts/dessert_detail.html"
     context_object_name = "dessert"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['user_has_reviewed'] = self.object.reviews.filter(user=self.request.user).exists()
+        else:
+            context['user_has_reviewed'] = False
+        return context
+
 
 class DessertCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Dessert

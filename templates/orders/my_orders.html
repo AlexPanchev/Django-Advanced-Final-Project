@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">My Orders</h1>
+
+    {% for order in orders %}
+        <div class="p-3 mb-3 border rounded">
+            <h4>Order #{{ order.pk }}</h4>
+            <p><strong>Status:</strong> {{ order.status }}</p>
+            <p><strong>Total:</strong> {{ order.total_price }} eur</p>
+            <a href="{% url 'order_detail' order.pk %}" class="btn btn-green btn-sm">View</a>
+        </div>
+    {% empty %}
+        <p>You have no orders yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -31,16 +31,8 @@ class OrderCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        context = self.get_context_data()
-        formset = context["formset"]
-
-        if formset.is_valid():
-            self.object = form.save()
-            formset.instance = self.object
-            formset.save()
-            return redirect("order_detail", pk=self.object.pk)
-
-        return self.render_to_response(self.get_context_data(form=form))
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
@@ -84,6 +76,14 @@ class OrderItemCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
         context = super().get_context_data(**kwargs)
         context["order"] = Order.objects.get(pk=self.kwargs["order_pk"])
         return context
+
+class MyOrdersView(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = "orders/my_orders.html"
+    context_object_name = "orders"
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
 
 
 class OrderItemUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):

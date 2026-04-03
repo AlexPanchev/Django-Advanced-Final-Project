@@ -34,7 +34,9 @@ PROJECT_APPS =[
     'desserts',
     'core',
     'orders',
-    'accounts.apps.AccountsConfig'
+    'accounts.apps.AccountsConfig',
+    "reviews",
+
 ]
 
 INSTALLED_APPS = [
