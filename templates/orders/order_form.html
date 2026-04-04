@@ -34,15 +34,30 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Phone Number:</label>
-                {{ form.customer_phone }}
-                {% if form.customer_phone.errors %}
-                    <div class="text-danger small mt-1">
-                        {% for error in form.customer_phone.errors %}
-                            <div>{{ error }}</div>
-                        {% endfor %}
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="form-label">Country Code:</label>
+                        {{ form.customer_country_code }}
+                        {% if form.customer_country_code.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.customer_country_code.errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     </div>
-                {% endif %}
+                    <div class="col-md-9">
+                        <label class="form-label">Phone Number:</label>
+                        {{ form.customer_phone_number }}
+                        {% if form.customer_phone_number.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.customer_phone_number.errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
 
             <div class="mb-3">
@@ -68,6 +83,20 @@
                     </div>
                 {% endif %}
             </div>
+
+            {% if form.status %}
+            <div class="mb-3">
+                <label class="form-label">Order Status:</label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.status.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            {% endif %}
 
             <h3 class="mt-4 mb-3">Order Items</h3>
 

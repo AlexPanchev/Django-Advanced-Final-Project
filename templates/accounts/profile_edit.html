@@ -1,14 +1,100 @@
 {% extends "base.html" %}
 
+{% block title %}Edit Profile{% endblock %}
+
 {% block content %}
-<div class="container py-5">
-    <h1 class="mb-4">Edit Profile</h1>
+<div class="container py-5" style="padding-top: 7rem; max-width: 700px;">
+    <h1 class="quick-access-title mb-5">Edit Profile</h1>
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
+    <div class="category-form-box p-4 rounded shadow">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-        <button type="submit" class="btn btn-green btn-lg">Save Changes</button>
-    </form>
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error:</strong>
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+
+
+            <div class="mb-3">
+                <label class="form-label">Profile Picture:</label>
+                {{ form.avatar }}
+                {% if form.avatar.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.avatar.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="form-label">Country Code:</label>
+                        {{ form.country_code }}
+                        {% if form.country_code.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.country_code.errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-9">
+                        <label class="form-label">Phone Number:</label>
+                        {{ form.phone_number }}
+                        {% if form.phone_number.errors %}
+                            <div class="text-danger small mt-1">
+                                {% for error in form.phone_number.errors %}
+                                    <div>{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Address:</label>
+                {{ form.address }}
+                {% if form.address.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.address.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Date of Birth:</label>
+                {{ form.birthdate }}
+                {% if form.birthdate.help_text %}
+                    <small class="form-text text-muted d-block mt-1">{{ form.birthdate.help_text|safe }}</small>
+                {% endif %}
+                {% if form.birthdate.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.birthdate.errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+
+
+            <button type="submit" class="btn btn-green btn-lg w-100 mt-4">Save Changes</button>
+        </form>
+    </div>
+
 </div>
 {% endblock %}

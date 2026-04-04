@@ -83,6 +83,7 @@ class OrderItemCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateVie
         context["order"] = Order.objects.get(pk=self.kwargs["order_pk"])
         return context
 
+
 class MyOrdersView(LoginRequiredMixin, ListView):
     model = Order
     template_name = "orders/my_orders.html"
@@ -90,6 +91,24 @@ class MyOrdersView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Order.objects.filter(user=self.request.user)
+
+
+class CustomerOrderDetailView(LoginRequiredMixin, DetailView):
+    model = Order
+    template_name = "orders/customer_order_detail.html"
+    context_object_name = "order"
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
+
+
+class CustomerOrderDeleteView(LoginRequiredMixin, DeleteView):
+    model = Order
+    template_name = "orders/order_delete.html"
+    success_url = reverse_lazy("my_orders")
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user, status=Order.Status.PENDING)
 
 
 class OrderItemUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):

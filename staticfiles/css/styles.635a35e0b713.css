@@ -1,0 +1,475 @@
+.hero-banner {
+    height: 100vh;
+    margin-top: 0;
+    background: url('https://wallpapers.com/images/hd/assorted-cakes-and-cookies-dessert-s3nugcazto0oqwru.jpg')
+                center/cover no-repeat;
+    position: relative;
+
+}
+.hero-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.25),
+        rgba(0, 0, 0, 0)
+    );
+    z-index: 1;
+}
+
+body {
+        background-color: #e0cfbe;
+        }
+header {
+    background-color: transparent;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+}
+footer {
+    background-color: transparent;
+    color: #333;
+}
+.navbar-overlay {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    align-items: center;
+    display: flex;
+    height: 100px;
+
+
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(8px);
+    padding: 1rem 0;
+
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+.navbar-overlay a {
+    color: #2b2b2b;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+
+}
+
+.navbar-overlay a:hover {
+    color: #000;
+}
+.navbar-overlay nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    height: 100%;
+}
+.quick-access-section {
+    margin-top: 6rem;
+    margin-bottom: 4rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 2rem;
+    background-color: #444a45;
+    backdrop-filter: blur(6px);
+
+}
+
+.quick-access-title {
+    font-size: 2.2rem;
+    font-weight: 600;
+    text-align: left;
+    margin-bottom: 2rem;
+    color: #444a45;
+}
+.quick-access-section .quick-access-title {
+    color: #e0cfbe !important;   /* beige text on dark background */
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+}
+
+body, p, a, button {
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-dark {
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-dark:hover {
+    transform: translateY(-2px);
+    background-color: #000;
+}
+
+.brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-right: 2rem;
+}
+main.container {
+    background-color: transparent;
+}
+
+html, body {
+    background-color: #e0cfbe !important;
+}
+
+main.container {
+    padding-top: 7rem;
+}
+
+.dessert-card-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+
+}
+
+
+.dessert-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background-color: #444a45 !important;
+    color: white;
+}
+
+.dessert-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+}
+
+.dessert-card .card-title,
+.dessert-card .card-text {
+    color: #e0cfbe !important;
+}
+
+.btn.btn-green {
+    background-color: #e0cfbe;
+    color: #2e2e2e;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    transition: background-color 0.25s ease, transform 0.2s ease;
+    text-decoration: none;
+}
+
+.btn.btn-green:hover {
+    background-color: #d4c2b0;
+    color: #2e2e2e;
+    transform: translateY(-2px);
+}
+
+
+
+
+.pagination .page-link {
+    background-color: #444a45;
+    color: #e0cfbe;
+    border: none;
+    margin: 0 3px;
+    border-radius: 6px;
+}
+
+.pagination .page-link:hover {
+    background-color: #444a45;
+    color: #e0cfbe;
+}
+
+.pagination .active .page-link {
+    background-color: #444a45 !important;
+    color: #e0cfbe !important;
+}
+
+/*.dessert-details-box {*/
+/*    background-color: #444a45;*/
+/*    color: #e0cfbe;*/
+/*    border-radius: 12px;*/
+/*    height: 100%;*/
+
+
+/*}*/
+
+.dessert-details-box h2,
+.dessert-details-box h4,
+.dessert-details-box p,
+.dessert-details-box li,
+.dessert-details-box strong {
+    color: #e0cfbe !important;
+}
+
+.dessert-detail-row {
+    align-items: stretch;
+}
+
+.dessert-form-box {
+    max-width: 700px;
+    background-color: #444a45;
+    color: #e0cfbe;
+}
+
+.dessert-form-box label {
+    color: #e0cfbe !important;
+    font-weight: 500;
+}
+
+.dessert-form-box input,
+.dessert-form-box textarea,
+.dessert-form-box select {
+    background-color: #e0cfbe;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem;
+    width: 100%;
+}
+
+.dessert-form-box textarea {
+    min-height: 120px;
+}
+
+.dessert-form-box input:focus,
+.dessert-form-box textarea:focus,
+.dessert-form-box select:focus {
+    outline: 2px solid #d4c2b0;
+    background-color: #f3e8dc;
+}
+
+
+.dessert-form-box .helptext,
+.category-form-box .helptext,
+.delete-box .helptext {
+    color: #444a45 !important;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.dessert-form-box small,
+.category-form-box small {
+    color: #444a45 !important;
+}
+
+/* Error message styling */
+.text-danger {
+    color: #d32f2f !important;
+    font-weight: 500;
+}
+
+.alert-danger {
+    background-color: #ffebee;
+    border-color: #ef5350;
+    color: #c62828;
+}
+
+.dessert-form-box .checkbox {
+    margin-bottom: 6px;
+}
+.dessert-form-box ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.dessert-form-box li {
+    margin-bottom: 6px;
+}
+
+.dessert-form-box input[type="checkbox"] {
+    accent-color: #e0cfbe;
+}
+
+.dessert-form-box ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.dessert-form-box li {
+    margin-bottom: 8px;
+}
+
+.dessert-form-box li label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.dessert-form-box input[type="checkbox"] {
+    accent-color: #e0cfbe;
+    width: 18px;
+    height: 18px;
+}
+
+.delete-box {
+    max-width: 600px;
+    background-color: #444a45;
+    color: #e0cfbe;
+    border-radius: 12px;
+}
+
+.delete-box p,
+.delete-box strong {
+    color: #e0cfbe !important;
+}
+
+
+.dessert-detail-wrapper {
+    display: flex;
+    gap: 2rem;
+}
+
+
+.dessert-detail-left,
+.dessert-detail-right {
+    flex: 1;
+}
+
+.dessert-details-box {
+    background-color: #444a45;
+    color: #e0cfbe;
+    border-radius: 12px;
+    padding: 2rem;
+    height: 100%;
+
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dessert-detail-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.dessert-detail-left {
+    display: flex;
+}
+
+.dessert-detail-img {
+    flex: 1;
+}
+
+.category-card {
+    background-color: #444a45;
+    color: #e0cfbe;
+    border-radius: 12px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+}
+
+.category-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.category-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.category-description-box {
+    background-color: #444a45;
+    color: #e0cfbe;
+    border-radius: 12px;
+}
+
+.category-form-box {
+    background-color: #444a45;
+    color: #e0cfbe;
+    border-radius: 12px;
+}
+
+.category-form-box label {
+    color: #e0cfbe !important;
+    font-weight: 500;
+}
+
+.category-form-box input,
+.category-form-box textarea {
+    background-color: #e0cfbe;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem;
+    width: 100%;
+}
+
+.category-form-box input:focus,
+.category-form-box textarea:focus {
+    outline: 2px solid #d4c2b0;
+    background-color: #f3e8dc;
+}
+
+
+.basket-table {
+    background-color: transparent !important;
+    border-color: #e0cfbe !important;
+    color: #e0cfbe !important;
+}
+
+.basket-table thead {
+    background-color: #333 !important;
+    border-bottom: 2px solid #e0cfbe !important;
+}
+
+.basket-table thead th {
+    color: #e0cfbe !important;
+    border-color: #e0cfbe !important;
+    border-bottom: 2px solid #e0cfbe !important;
+    font-weight: 600;
+    text-align: left;
+    padding: 1rem 0.75rem !important;
+    background-color: #333 !important;
+}
+
+.basket-table tbody tr {
+    border-bottom: 1px solid #e0cfbe !important;
+    background-color: transparent !important;
+}
+
+.basket-table tbody tr:hover {
+    background-color: rgba(224, 207, 190, 0.1) !important;
+}
+
+.basket-table tbody td {
+    color: #e0cfbe !important;
+    border-color: #e0cfbe !important;
+    padding: 1rem 0.75rem !important;
+    vertical-align: middle !important;
+    background-color: transparent !important;
+}
+
+.basket-link {
+    color: #e0cfbe !important;
+    text-decoration: none !important;
+}
+
+/* Basket Quantity Controls */
+.btn-outline-success,
+.btn-outline-warning {
+    color: #e0cfbe !important;
+    border-color: #e0cfbe !important;
+}
+
+.btn-outline-success:hover {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: white !important;
+}
+
+.btn-outline-warning:hover {
+    background-color: #ffc107 !important;
+    border-color: #ffc107 !important;
+    color: #333 !important;
+}

@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
+from django.db import IntegrityError
 
 from desserts.models import Dessert, Category, Ingredient
 from orders.models import Order, OrderItem
@@ -28,7 +29,10 @@ def add_user_to_customers_group(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Profile)
 def create_basket_for_new_profile(sender, instance, created, **kwargs):
     if created:
-        Basket.objects.create(user=instance.user)
+        try:
+            Basket.objects.get_or_create(user=instance.user)
+        except IntegrityError:
+            pass  # Basket already exists
 
 
 def create_default_groups():
