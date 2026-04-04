@@ -14,7 +14,17 @@ class DessertListView(ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        return Dessert.objects.filter(is_available=True)
+        qs = Dessert.objects.filter(is_available=True)
+        q = self.request.GET.get("q")
+        if q:
+            qs = qs.filter(name__icontains=q)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["query"] = self.request.GET.get("q", "")
+        return context
+
 
 
 class AllDessertsListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):

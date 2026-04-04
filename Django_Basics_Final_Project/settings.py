@@ -38,7 +38,7 @@ PROJECT_APPS =[
     "reviews",
     'rest_framework',
     'api',
-
+    'django_q',
 ]
 
 INSTALLED_APPS = [
@@ -49,6 +49,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ] + PROJECT_APPS
+
+Q_CLUSTER = {
+    "name": "dessert_shop",
+    "workers": 4,
+    "timeout": 90,
+    "retry": 120,
+    "queue_limit": 50,
+    "bulk": 10,
+    "orm": "default",
+    "cron": [
+            {
+                "name": "daily_order_report",
+                "func": "orders.tasks.send_daily_order_report",
+                "schedule": "0 20 * * *",
+            },
+        ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

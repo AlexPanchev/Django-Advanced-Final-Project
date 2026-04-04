@@ -4,9 +4,11 @@ from django.views.generic import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
+from django_q.tasks import async_task
 
 from .models import Order, OrderItem
 from .forms import OrderForm, OrderCreateForm, OrderItemForm, OrderItemFormSet
+from .tasks import send_order_confirmation_email
 
 
 class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -32,7 +34,11 @@ class OrderCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super().form_valid(form)
+        response = super().form_valid(form)
+
+        async_task(send_order_confirmation_email, self.object)
+
+        return response
 
 
 class OrderDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):

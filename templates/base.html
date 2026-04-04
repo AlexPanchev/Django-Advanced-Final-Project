@@ -24,7 +24,10 @@
 
          {% if user.is_authenticated and perms.orders.view_order %}
             <a href="{% url 'order_list' %}" class="me-3">Orders</a>
-        {% endif %}
+         {% endif %}
+
+
+
 
         {% if user.is_authenticated %}
             <a href="{% url 'profile_detail' %}" class="me-3">My Profile</a>
