@@ -1,149 +1,266 @@
-# 🍰 Dessert Shop – Django Basics Final Project
+# 🍰 Dessert Shop – Django Advanced Final Project
 
-A fully functional and visually polished web application built as part of the **Django Basics Course @ SoftUni**.  
-The project demonstrates Django fundamentals including models, forms, views, templates, CRUD operations, PostgreSQL integration, and clean project structure.
+A fully featured, production‑ready Django web application built as part of the **Django Advanced Course @ SoftUni**.  
+The project demonstrates real‑world Django architecture including:
 
----
-
-## 📌 Project Overview
-
-The **Dessert Shop** application allows users to browse desserts, categories, and orders.  
-Administrators can manage desserts, categories, orders, and order items through full CRUD functionality.
-
-The project follows Django best practices and includes:
-
-- Modular architecture with 3 separate Django apps  
+- multi‑app modular structure  
 - PostgreSQL database  
-- Dynamic templates with Bootstrap styling  
-- Custom template filter  
-- Custom 404 page  
-- Form validation, custom error messages, and read‑only fields  
-- Delete confirmation pages  
-- Navigation across all pages  
-- Clean, readable code  
+- authentication, authorization & permissions  
+- REST API (DRF)  
+- asynchronous task processing (Django‑Q)  
+- cron jobs  
+- media uploads  
+- custom template filters  
+- search & filtering  
+- staff dashboard  
+- signals  
+- environment variables (.env)  
+- clean, maintainable code  
 
 ---
 
-## 🧩 Features
+# 📌 Project Overview
 
-### ✔ Desserts
+**Dessert Shop** is a complete dessert management system where:
+
+### 👤 Customers can:
+- browse desserts  
+- view dessert details  
+- leave reviews  
+- create orders  
+- view their personal order history (“My Orders”)  
+
+### 👨‍🍳 Staff can:
+- manage desserts, categories, ingredients  
+- manage orders and order items  
+- access a staff dashboard with statistics  
+- use the REST API with elevated permissions  
+
+---
+
+# 🧩 Features
+
+## ✔ Desserts
 - List all desserts  
 - View dessert details  
 - Create, edit, delete desserts  
-- Assign categories and ingredients  
 - Upload dessert images  
+- Assign categories & ingredients  
+- Search desserts by name  
 
-### ✔ Categories
+## ✔ Categories
 - List categories  
 - View category details  
-- Create, edit, delete categories  
+- Full CRUD  
 
-### ✔ Orders
+## ✔ Ingredients
+- List ingredients  
+- Mark allergens  
+- Full CRUD  
+
+## ✔ Orders
 - Create customer orders  
 - Add, edit, delete order items  
 - Automatic total price calculation  
-- Read‑only fields in forms  
-- Validation and custom error messages  
+- Validation & custom error messages  
+- “My Orders” page for authenticated users  
 
-### ✔ Additional Features
-- Custom template filter (`euro`) for formatting prices  
-- Custom 404 error page  
-- Responsive design using Bootstrap  
-- Template inheritance and reusable components  
+## ✔ Reviews (User‑Generated Content)
+- Users can leave 1 review per dessert  
+- Edit/delete only your own review  
+- Reviews displayed on dessert detail page  
+
+## ✔ Authentication & Authorization
+- Registration, login, logout  
+- User groups: **Customers** & **Staff**  
+- Permissions using `PermissionRequiredMixin`  
+- Dynamic navigation based on role  
+- Signals for automatic profile creation & group assignment  
+
+## ✔ REST API (Django REST Framework)
+- API endpoints for:
+  - Desserts  
+  - Categories  
+  - Ingredients  
+  - Orders  
+  - Reviews  
+- ViewSets + Routers  
+- Nested serializers  
+- API permissions  
+- JSON responses  
+
+## ✔ Asynchronous Task Processing (Django‑Q)
+- Background email sending on new order  
+- Daily cron job: send order summary report  
+- Worker cluster with multiprocessing  
+
+## ✔ Staff Dashboard
+- Total users  
+- Total desserts  
+- Total orders  
+- Pending orders  
+- Clean Bootstrap UI  
+
+## ✔ Additional Features
+- Custom template filter (`euro`)  
+- Custom 404 page  
+- Responsive Bootstrap design  
+- Template inheritance  
+- Pagination  
+- Signals  
+- Environment variables (.env)  
 
 ---
 
-## 🛠 Technologies Used
+# 🛠 Technologies Used
 
-- **Python 3.9**
-- **Django 4.2**
-- **PostgreSQL**
-- **Bootstrap 5**
-- **HTML5 / CSS3**
-- **Pillow** (for image uploads)
+- Python 3.9  
+- Django 4.2  
+- Django REST Framework  
+- Django‑Q (async tasks + cron)  
+- PostgreSQL  
+- Bootstrap 5  
+- Pillow (image uploads)  
+- python‑dotenv  
 
 ---
 
-## 🗄 Database Setup (PostgreSQL)
+# 🔐 Environment Variables (.env)
 
-Before running the project, create a PostgreSQL database:
+Create a `.env` file in the project root:
+
+```
+SECRET_KEY=your-secret-key
+
+DB_NAME=final_project_db
+DB_USER=postgres
+DB_PASSWORD=yourpassword
+DB_HOST=localhost
+DB_PORT=5432
+
+DEBUG=True
+EMAIL_HOST_PASSWORD=your-email-password
+```
+
+`.env` is included in `.gitignore` and **must not be committed**.
+
+---
+
+# 🗄 Database Setup (PostgreSQL)
 
 ```sql
 CREATE DATABASE final_project_db;
+```
 
+---
 
+# 🚀 Installation & Running the Project
 
-
-🚀 Installation & Running the Project
-1. Clone the repository
+### 1. Clone the repository
+```bash
 git clone <your-repo-url>
 cd Django-Basics-Final-Project
+```
 
+### 2. Create & activate virtual environment
+```bash
+python -m venv .venv
+.venv\Scripts\activate   # Windows
+source .venv/bin/activate # Linux/Mac
+```
 
-2. Create and activate a virtual environment
-python -m venv venv
-source venv/bin/activate   # Linux/Mac
-venv\Scripts\activate      # Windows
-
-
-3. Install dependencies
+### 3. Install dependencies
+```bash
 pip install -r requirements.txt
+```
 
-
-4. Apply migrations
+### 4. Apply migrations
+```bash
 python manage.py migrate
+```
 
-
-5. Run the development server
+### 5. Run development server
+```bash
 python manage.py runserver
+```
 
+Open:  
+http://127.0.0.1:8000/
 
-Open the app at:
-http://127.0.0.1:8000/ (127.0.0.1 in Bing)
+---
 
-📁 Project Structure
+# ⚡ Running Asynchronous Tasks
+
+### Start Django‑Q worker:
+```bash
+python manage.py qcluster
+```
+
+### Features:
+- async email on order creation  
+- daily cron report  
+
+---
+
+# 📁 Project Structure
+
+```
 Django-Basics-Final-Project/
 │
-├── core/               # Home page and shared logic
+├── accounts/           # Authentication, profiles, signals
+├── api/                # REST API (DRF)
+├── core/               # Home page, shared logic
 ├── desserts/           # Desserts, categories, ingredients
-├── orders/             # Orders and order items
+├── orders/             # Orders & order items
+├── reviews/            # User reviews
 │
 ├── templates/          # All HTML templates
-│   ├── desserts/
-│   ├── categories/
-│   ├── orders/
-│   ├── base.html
-│   ├── home.html
-│   └── 404.html
+├── static/             # CSS, images
+├── media/              # Uploaded images
 │
-├── static/
-│   └── css/styles.css  # Custom styling
-│
+├── .env                # Environment variables
+├── .gitignore
 ├── requirements.txt
 ├── manage.py
 └── README.md
+```
 
+---
 
+# 🧪 Custom Template Filter
 
-🧪 Custom Template Filter
-Located in desserts/templatetags/dessert_filters.py:
+`desserts/templatetags/dessert_filters.py`:
+
+```python
 @register.filter
 def euro(value):
     return f"{float(value):.2f} €"
-
+```
 
 Usage:
+
+```django
 {{ dessert.price|euro }}
+```
 
+---
 
+# ⚠ Notes for the Examiner
 
-⚠ Notes for the Examiner
-- Authentication is intentionally excluded as required by the assignment.
-- The project uses PostgreSQL as specified.
-- All CRUD operations include confirmation pages.
-- Forms include custom validation, error messages, placeholders, and a read‑only field.
-- The project contains more than 10 templates, with more than 7 dynamic pages.
-- A custom 404 page is implemented.
-- A custom template filter is implemented.
-- Navigation is consistent across all pages.
-- The project follows Django best practices and clean code principles.
+- Project includes **authentication, authorization, and permissions**.  
+- Uses **PostgreSQL** as required.  
+- Contains **20+ templates**, **multiple dynamic pages**, and **full CRUD**.  
+- Implements **REST API**, **async tasks**, **cron jobs**, **signals**, **custom filters**, **media uploads**, **search**, **pagination**, and **dashboard**.  
+- Follows Django best practices, clean code, and modular architecture.  
+
+---
+
+# 🎉 Final Notes
+
+This project goes **far beyond** the basic requirements and demonstrates:
+
+- real‑world Django architecture  
+- production‑ready structure  
+- advanced backend concepts  
+- clean, maintainable code  
+
