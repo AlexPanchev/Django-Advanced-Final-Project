@@ -33,6 +33,7 @@
             <a href="{% url 'profile_detail' %}" class="me-3">My Profile</a>
             <a href="{% url 'logout' %}">Logout</a>
             <a href="{% url 'my_orders' %}" class="me-3">My Orders</a>
+            <a href="{% url 'basket_view' %}" class="me-3">Basket</a>
         {% else %}
             <a href="{% url 'login' %}" class="me-3">Login</a>
             <a href="{% url 'register' %}">Register</a>

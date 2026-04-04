@@ -9,10 +9,12 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="quick-access-title m-0">{{ category.name }}</h1>
 
-        <div class="d-flex gap-3">
-            <a href="{% url 'category_update' category.pk %}" class="btn btn-green btn-lg">Edit</a>
-            <a href="{% url 'category_delete' category.pk %}" class="btn btn-green btn-lg">Delete</a>
-        </div>
+        {% if user.is_staff %}
+            <div class="d-flex gap-3">
+                <a href="{% url 'category_update' category.pk %}" class="btn btn-green btn-lg">Edit</a>
+                <a href="{% url 'category_delete' category.pk %}" class="btn btn-green btn-lg">Delete</a>
+            </div>
+        {% endif %}
     </div>
 
     <div class="category-description-box p-4 rounded shadow mb-5">

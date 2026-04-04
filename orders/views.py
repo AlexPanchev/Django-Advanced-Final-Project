@@ -18,7 +18,7 @@ class OrderListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = "orders.view_order"
 
 
-class OrderCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class OrderCreateView(LoginRequiredMixin, CreateView):
     model = Order
     form_class = OrderCreateForm
     template_name = "orders/order_form.html"

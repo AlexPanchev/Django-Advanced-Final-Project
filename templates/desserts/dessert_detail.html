@@ -39,11 +39,16 @@
 
                 <p class="mt-3"><strong>Available:</strong> {{ dessert.is_available|yesno:"Yes,No" }}</p>
 
-                <div class="mt-4 d-flex gap-3">
-                    <a href="{% url 'dessert_edit' dessert.pk %}" class="btn btn-green btn-lg">Edit</a>
-                    <a href="{% url 'dessert_delete' dessert.pk %}" class="btn btn-green btn-lg">Delete</a>
-                </div>
-
+                {% if user.is_staff %}
+                    <div class="mt-4 d-flex gap-3">
+                        <a href="{% url 'dessert_edit' dessert.pk %}" class="btn btn-green btn-lg">Edit</a>
+                        <a href="{% url 'dessert_delete' dessert.pk %}" class="btn btn-green btn-lg">Delete</a>
+                    </div>
+                {% elif user.is_authenticated %}
+                    <div class="mt-4 d-flex gap-3">
+                        <a href="{% url 'add_to_basket' dessert.pk %}" class="btn btn-green btn-lg">Add to Basket</a>
+                    </div>
+                {% endif %}
             </div>
         </div>
 

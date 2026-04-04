@@ -410,3 +410,66 @@ main.container {
     outline: 2px solid #d4c2b0;
     background-color: #f3e8dc;
 }
+
+
+.basket-table {
+    background-color: transparent !important;
+    border-color: #e0cfbe !important;
+    color: #e0cfbe !important;
+}
+
+.basket-table thead {
+    background-color: #333 !important;
+    border-bottom: 2px solid #e0cfbe !important;
+}
+
+.basket-table thead th {
+    color: #e0cfbe !important;
+    border-color: #e0cfbe !important;
+    border-bottom: 2px solid #e0cfbe !important;
+    font-weight: 600;
+    text-align: left;
+    padding: 1rem 0.75rem !important;
+    background-color: #333 !important;
+}
+
+.basket-table tbody tr {
+    border-bottom: 1px solid #e0cfbe !important;
+    background-color: transparent !important;
+}
+
+.basket-table tbody tr:hover {
+    background-color: rgba(224, 207, 190, 0.1) !important;
+}
+
+.basket-table tbody td {
+    color: #e0cfbe !important;
+    border-color: #e0cfbe !important;
+    padding: 1rem 0.75rem !important;
+    vertical-align: middle !important;
+    background-color: transparent !important;
+}
+
+.basket-link {
+    color: #e0cfbe !important;
+    text-decoration: none !important;
+}
+
+/* Basket Quantity Controls */
+.btn-outline-success,
+.btn-outline-warning {
+    color: #e0cfbe !important;
+    border-color: #e0cfbe !important;
+}
+
+.btn-outline-success:hover {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: white !important;
+}
+
+.btn-outline-warning:hover {
+    background-color: #ffc107 !important;
+    border-color: #ffc107 !important;
+    color: #333 !important;
+}

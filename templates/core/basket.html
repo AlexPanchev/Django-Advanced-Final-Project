@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load dessert_filters %}
+
+{% block title %}My Basket{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="padding-top: 7rem;">
+    <h1 class="quick-access-title mb-5">My Basket</h1>
+
+    {% if items %}
+        <div class="category-description-box p-4 rounded shadow mb-5">
+            <div class="table-responsive">
+                <table class="table table-hover basket-table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Dessert</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'dessert_detail' item.dessert.pk %}" class="text-decoration-none basket-link">
+                                    <strong>{{ item.dessert.name }}</strong>
+                                </a>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <a href="{% url 'decrease_basket_item' item.id %}" class="btn btn-sm btn-outline-warning">−</a>
+                                    <span style="min-width: 30px; text-align: center;">{{ item.quantity }}</span>
+                                    <a href="{% url 'increase_basket_item' item.id %}" class="btn btn-sm btn-outline-success">+</a>
+                                </div>
+                            </td>
+                            <td>{{ item.dessert.price|euro }}</td>
+                            <td><strong>{{ item.line_total|euro }}</strong></td>
+                            <td>
+                                <form method="post" action="{% url 'remove_from_basket' item.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <a href="{% url 'dessert_list' %}" class="btn btn-outline-secondary btn-lg">Continue Shopping</a>
+            </div>
+            <div class="col-md-6 text-end">
+                <div class="category-description-box p-4 rounded shadow">
+                    <h5 class="mb-3">Order Summary</h5>
+                    <hr class="my-3">
+                    <h4 class="mb-4"><strong>Total: {{ basket.total_price|euro }}</strong></h4>
+                    <form method="post" action="{% url 'place_order_from_basket' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-green btn-lg w-100">Place Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+        <div class="category-description-box p-5 rounded shadow text-center">
+            <h4 class="mb-3">Your basket is empty</h4>
+            <p class="text-muted mb-4">No desserts in your basket yet. Start adding your favorite desserts!</p>
+            <a href="{% url 'dessert_list' %}" class="btn btn-green btn-lg">Start Shopping</a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+
+
+
+
+

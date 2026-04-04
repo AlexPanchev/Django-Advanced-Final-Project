@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from desserts.models import Dessert, Category, Ingredient
 from orders.models import Order, OrderItem
 from .models import Profile
+from core.models import Basket
 
 User = get_user_model()
 
@@ -22,6 +23,12 @@ def add_user_to_customers_group(sender, instance, created, **kwargs):
     if created:
         customers_group, _ = Group.objects.get_or_create(name="Customers")
         instance.groups.add(customers_group)
+
+
+@receiver(post_save, sender=Profile)
+def create_basket_for_new_profile(sender, instance, created, **kwargs):
+    if created:
+        Basket.objects.create(user=instance.user)
 
 
 def create_default_groups():
