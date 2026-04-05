@@ -7,4 +7,4 @@ class AccountsConfig(AppConfig):
 
     def ready(self):
         import accounts.signals
-        accounts.signals.create_default_groups()
+        # accounts.signals.create_default_groups()

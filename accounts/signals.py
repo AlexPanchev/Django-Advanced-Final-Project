@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_migrate
 from django.dispatch import receiver
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -32,7 +32,11 @@ def create_basket_for_new_profile(sender, instance, created, **kwargs):
         try:
             Basket.objects.get_or_create(user=instance.user)
         except IntegrityError:
-            pass  # Basket already exists
+            pass
+
+@receiver(post_migrate)
+def create_default_groups_signal(sender, **kwargs):
+    create_default_groups()
 
 
 def create_default_groups():
@@ -57,3 +61,4 @@ def create_default_groups():
         content_type__in=[order_ct, orderitem_ct]
     )
     customers_group.permissions.set(customer_permissions)
+
