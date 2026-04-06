@@ -1,0 +1,8 @@
+{
+  "routes": [
+    {
+      "route": "/media/*",
+      "serve": "/media/"
+    }
+  ]
+}
