@@ -1,0 +1,1 @@
+gunicorn Django_Basics_Final_Project.wsgi
