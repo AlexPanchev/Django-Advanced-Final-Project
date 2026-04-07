@@ -1,114 +1,146 @@
 # 🍰 Dessert Shop – Django Advanced Final Project
 
-A fully featured, production‑ready Django web application built as part of the **Django Advanced Course @ SoftUni**.  
-The project demonstrates real‑world Django architecture including:
+A fully featured, production‑ready Django web application built for the **Django Advanced Course @ SoftUni**.  
+The project demonstrates real‑world backend architecture, modular design, REST APIs, asynchronous processing, background tasks, permissions, and clean, maintainable code.
 
-- multi‑app modular structure  
-- PostgreSQL database  
-- authentication, authorization & permissions  
-- REST API (DRF)  
-- asynchronous task processing (Django‑Q)  
-- cron jobs  
-- media uploads  
-- custom template filters  
-- search & filtering  
-- staff dashboard  
-- signals  
-- environment variables (.env)  
-- clean, maintainable code  
+---
+
+## 🌐 Live Demo
+
+🔗 **https://dessertshop-h0hwemhhbjgzcgas.spaincentral-01.azurewebsites.net/**
 
 ---
 
 # 📌 Project Overview
 
-**Dessert Shop** is a complete dessert management system where:
+**Dessert Shop** is a complete dessert management platform where customers can browse desserts, place orders, leave reviews, and manage their profiles — while staff members can manage the entire catalog, orders, and ingredients through a permission‑based admin interface.
 
-### 👤 Customers can:
-- browse desserts  
-- view dessert details  
-- leave reviews  
-- create orders  
-- view their personal order history (“My Orders”)  
+The project includes:
 
-### 👨‍🍳 Staff can:
-- manage desserts, categories, ingredients  
-- manage orders and order items  
-- access a staff dashboard with statistics  
-- use the REST API with elevated permissions  
+- Full CRUD for Desserts, Categories, Ingredients  
+- Customer order system with Order Items  
+- Review system (1 review per user per dessert)  
+- Staff dashboard  
+- REST API (DRF)  
+- Asynchronous tasks (Django‑Q)  
+- Cloud deployment (Azure App Service)  
+- PostgreSQL database  
+- Cloudinary media storage  
+- Authentication, authorization, permissions  
+- Custom template filters  
+- Signals  
+- Pagination, search, responsive UI  
+- 25+ automated tests  
 
 ---
 
 # 🧩 Features
 
-## ✔ Desserts
-- List all desserts  
-- View dessert details  
-- Create, edit, delete desserts  
+## 🍰 Desserts
+- List all available desserts  
+- Dessert details page  
+- Create / edit / delete desserts (staff only)  
 - Upload dessert images  
 - Assign categories & ingredients  
 - Search desserts by name  
+- Pagination  
 
-## ✔ Categories
+## 🗂 Categories
 - List categories  
-- View category details  
-- Full CRUD  
+- Category details  
+- Full CRUD (staff only)  
 
-## ✔ Ingredients
+## 🧾 Ingredients
 - List ingredients  
 - Mark allergens  
-- Full CRUD  
+- Full CRUD (staff only)  
 
-## ✔ Orders
-- Create customer orders  
-- Add, edit, delete order items  
+## 🛒 Orders
+- Customers can create orders  
+- Add / edit / delete order items  
 - Automatic total price calculation  
-- Validation & custom error messages  
-- “My Orders” page for authenticated users  
+- Custom validation  
+- “My Orders” page  
+- Staff can manage all orders  
 
-## ✔ Reviews (User‑Generated Content)
-- Users can leave 1 review per dessert  
+## ⭐ Reviews (UGC)
+- One review per dessert per user  
 - Edit/delete only your own review  
 - Reviews displayed on dessert detail page  
 
-## ✔ Authentication & Authorization
+## 🔐 Authentication & Authorization
 - Registration, login, logout  
-- User groups: **Customers** & **Staff**  
-- Permissions using `PermissionRequiredMixin`  
+- Profile page & profile editing  
+- Two user groups: **Customers** & **Staff**  
+- Permissions via `PermissionRequiredMixin`  
 - Dynamic navigation based on role  
-- Signals for automatic profile creation & group assignment  
+- Signals for automatic profile creation  
 
-## ✔ REST API (Django REST Framework)
-- API endpoints for:
-  - Desserts  
-  - Categories  
-  - Ingredients  
-  - Orders  
-  - Reviews  
+## 📡 REST API (DRF)
+- Endpoints for desserts, categories, ingredients, orders, reviews  
 - ViewSets + Routers  
 - Nested serializers  
-- API permissions  
+- Permission classes  
 - JSON responses  
 
-## ✔ Asynchronous Task Processing (Django‑Q)
+## ⚡ Asynchronous Processing (Django‑Q)
 - Background email sending on new order  
-- Daily cron job: send order summary report  
+- Daily cron job: order summary report  
 - Worker cluster with multiprocessing  
 
-## ✔ Staff Dashboard
+## 📊 Staff Dashboard
 - Total users  
 - Total desserts  
 - Total orders  
 - Pending orders  
 - Clean Bootstrap UI  
 
-## ✔ Additional Features
+## 🧰 Additional Features
 - Custom template filter (`euro`)  
 - Custom 404 page  
 - Responsive Bootstrap design  
 - Template inheritance  
-- Pagination  
 - Signals  
-- Environment variables (.env)  
+- Environment variables (`.env`)  
+
+---
+
+# 🔑 User Roles & Permissions
+
+## 👤 Customers
+- Browse desserts  
+- Create orders  
+- Leave reviews  
+- Access “My Orders”  
+
+## 👨‍🍳 Staff
+- Full CRUD for desserts, categories, ingredients  
+- Manage orders  
+- Access staff dashboard  
+- Extended API permissions  
+
+## 🔔 Automatic Group Assignment
+A Django signal assigns new users to the **Customers** group and creates a Profile.
+
+---
+
+# 📡 API Documentation
+
+**Base URL:** `/api/`
+
+## Available Endpoints
+- `/desserts/`
+- `/categories/`
+- `/ingredients/`
+- `/orders/`
+- `/reviews/`
+
+## Authentication
+- Session authentication  
+- Staff users have elevated permissions  
+
+## Response Format
+- JSON  
 
 ---
 
@@ -120,8 +152,10 @@ The project demonstrates real‑world Django architecture including:
 - Django‑Q (async tasks + cron)  
 - PostgreSQL  
 - Bootstrap 5  
-- Pillow (image uploads)  
+- Pillow  
 - python‑dotenv  
+- Cloudinary (media storage)  
+- Azure App Service  
 
 ---
 
@@ -129,138 +163,19 @@ The project demonstrates real‑world Django architecture including:
 
 Create a `.env` file in the project root:
 
-```
-SECRET_KEY=your-secret-key
+```env
+SECRET_KEY=
 
-DB_NAME=final_project_db
-DB_USER=postgres
-DB_PASSWORD=yourpassword
-DB_HOST=localhost
-DB_PORT=5432
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
 
-DEBUG=True
-EMAIL_HOST_PASSWORD=your-email-password
-```
+DEBUG=
 
-`.env` is included in `.gitignore` and **must not be committed**.
+EMAIL_HOST_PASSWORD=
 
----
-
-# 🗄 Database Setup (PostgreSQL)
-
-```sql
-CREATE DATABASE final_project_db;
-```
-
----
-
-# 🚀 Installation & Running the Project
-
-### 1. Clone the repository
-```bash
-git clone <your-repo-url>
-cd Django-Basics-Final-Project
-```
-
-### 2. Create & activate virtual environment
-```bash
-python -m venv .venv
-.venv\Scripts\activate   # Windows
-source .venv/bin/activate # Linux/Mac
-```
-
-### 3. Install dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Apply migrations
-```bash
-python manage.py migrate
-```
-
-### 5. Run development server
-```bash
-python manage.py runserver
-```
-
-Open:  
-http://127.0.0.1:8000/
-
----
-
-# ⚡ Running Asynchronous Tasks
-
-### Start Django‑Q worker:
-```bash
-python manage.py qcluster
-```
-
-### Features:
-- async email on order creation  
-- daily cron report  
-
----
-
-# 📁 Project Structure
-
-```
-Django-Basics-Final-Project/
-│
-├── accounts/           # Authentication, profiles, signals
-├── api/                # REST API (DRF)
-├── core/               # Home page, shared logic
-├── desserts/           # Desserts, categories, ingredients
-├── orders/             # Orders & order items
-├── reviews/            # User reviews
-│
-├── templates/          # All HTML templates
-├── static/             # CSS, images
-├── media/              # Uploaded images
-│
-├── .env                # Environment variables
-├── .gitignore
-├── requirements.txt
-├── manage.py
-└── README.md
-```
-
----
-
-# 🧪 Custom Template Filter
-
-`desserts/templatetags/dessert_filters.py`:
-
-```python
-@register.filter
-def euro(value):
-    return f"{float(value):.2f} €"
-```
-
-Usage:
-
-```django
-{{ dessert.price|euro }}
-```
-
----
-
-# ⚠ Notes for the Examiner
-
-- Project includes **authentication, authorization, and permissions**.  
-- Uses **PostgreSQL** as required.  
-- Contains **20+ templates**, **multiple dynamic pages**, and **full CRUD**.  
-- Implements **REST API**, **async tasks**, **cron jobs**, **signals**, **custom filters**, **media uploads**, **search**, **pagination**, and **dashboard**.  
-- Follows Django best practices, clean code, and modular architecture.  
-
----
-
-# 🎉 Final Notes
-
-This project goes **far beyond** the basic requirements and demonstrates:
-
-- real‑world Django architecture  
-- production‑ready structure  
-- advanced backend concepts  
-- clean, maintainable code  
-
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
