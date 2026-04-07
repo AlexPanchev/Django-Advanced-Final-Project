@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.db import models
 from django.core.validators import MinValueValidator
 
@@ -74,15 +75,8 @@ class Dessert(models.Model):
             "min_value": "Price must be greater than zero."
         }
     )
-    image = models.ImageField(
-        upload_to="desserts/",
-        verbose_name="Image",
-        help_text="Upload an image of the dessert.",
-        error_messages={
-            "required": "An image is required for this dessert.",
-            "invalid": "Please upload a valid image file."
-        }
-    )
+    image = CloudinaryField('image')
+
     is_available = models.BooleanField(
         default=True,
         verbose_name="Available",

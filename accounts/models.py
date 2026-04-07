@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.conf import settings
 from django.db import models
 from desserts.models import Ingredient
@@ -9,11 +10,8 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         related_name="profile",
     )
-    avatar = models.ImageField(
-        upload_to="avatars/",
-        blank=True,
-        null=True,
-    )
+    avatar = CloudinaryField('image')
+
     phone = models.CharField(
         max_length=20,
         blank=True,

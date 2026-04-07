@@ -31,6 +31,8 @@ PROJECT_APPS = [
     "rest_framework",
     "api",
     "django_q",
+    "cloudinary",
+    "cloudinary_storage"
 ]
 
 INSTALLED_APPS = [
@@ -151,10 +153,13 @@ STORAGES = {
     },
 }
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = '/home/site/wwwroot/media'
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.getenv("CLOUDINARY_APY_KEY"),
+    "API_SECRET": os.getenv("CLOUDINARY_APY_SECRET"),
+}
 
-
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
